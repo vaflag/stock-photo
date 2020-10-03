@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation tabs dimens -->
+    <dimen name="tabSize">50dp</dimen>
+    <dimen name="tabSpace">5dp</dimen>
+</resources>
