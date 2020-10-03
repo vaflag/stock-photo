@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs size="@dimen/tabSize"
+    space="@dimen/tabSpace">
+
+    <tab
+        inactiveColor="@color/lightGray"
+        activeColor="@color/black"
+        drawable="@drawable/ic_home"/>
+
+    <tab
+        inactiveColor="@color/lightGray"
+        activeColor="@color/black"
+        drawable="@drawable/ic_search"/>
+</tabs>
