@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.vf.photobank.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Search fragment of the application.
@@ -14,6 +16,7 @@ import com.vf.photobank.R
  * retrieve a selection of images from a query.
  */
 class SearchFragment : Fragment() {
+    private val viewModel: SearchViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,5 +24,15 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.photoPage.observe(
+            viewLifecycleOwner,
+            Observer {
+                // Update UI
+            }
+        )
     }
 }
