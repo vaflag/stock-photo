@@ -18,7 +18,7 @@ class SearchViewModel(
         get() = _photoPage
 
     fun getPhotosBySearch(query: String) {
-        photoService.getPhotosBySearch(query)
+        photoService.getPhotosBySearch(query, 1)
             .applySchedulers()
             .doOnSubscribe { _photoPage.value = Resource.Loading() }
             .subscribe(

@@ -1,8 +1,8 @@
 package com.vf.photobank.di
 
 import com.google.gson.GsonBuilder
-import com.vf.photobank.BuildConfig.API_BASE_URL
 import com.vf.photobank.BuildConfig.API_KEY
+import com.vf.photobank.util.API_BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

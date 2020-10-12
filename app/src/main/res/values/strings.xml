@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">photobank</string>
+    <string name="item_photo_content_description">Photo</string>
+
+    <!-- HOME FRAGMENT -->
+    <string name="home_header_title">Free Stock Photos</string>
+    <string name="home_header_subtitle">provided by <u>Pexels</u></string>
+    <string name="home_header_image_description">Pexel\'s logo</string>
+
+    <!-- ERRORS -->
+    <string name="home_error">Something went wrong.</string>
+    <string name="home_error_action"><u>Try again</u></string>
+    <string name="home_error_snack_bar">An error has occurred.</string>
+    <string name="home_error_snack_bar_button">Try again</string>
+    <string name="home_error_image_description">Error icon</string>
 </resources>

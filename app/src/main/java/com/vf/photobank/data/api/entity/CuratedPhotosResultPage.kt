@@ -10,5 +10,5 @@ data class CuratedPhotosResultPage(
     val numberPerPage: Int,
     val photos: List<Photo>,
     @SerializedName("next_page")
-    val nextPageUrl: String
+    val nextPageUrl: String?
 )
