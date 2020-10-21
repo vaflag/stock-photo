@@ -21,6 +21,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -66,6 +70,9 @@ dependencies {
 
     // AnimatedTabLayout
     implementation 'com.github.iammert:AnimatedTabLayout:0.1'
+
+    // Custom Image View
+    implementation 'com.github.MikeOrtiz:TouchImageView:3.0.1'
 
     // Tests
     testImplementation 'junit:junit:4.13'
