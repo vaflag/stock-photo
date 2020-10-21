@@ -5,6 +5,9 @@
     <!--Internet Permission-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--Storage Permission-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="AndroidApplication"
         android:allowBackup="true"

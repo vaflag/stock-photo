@@ -29,13 +29,18 @@ import kotlinx.android.synthetic.main.item_photo.view.*
  * @param hasHeader indicates whether a header should be added.
  */
 class PhotosAdapter(
-    private val hasHeader: Boolean = false
+    private val hasHeader: Boolean = false,
+    private val onPhotoClick: (Photo) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val ITEM_VIEW_TYPE_HEADER = 0
         private const val ITEM_VIEW_TYPE_ITEM = 1
         private const val ITEM_VIEW_TYPE_FOOTER = 2
+
+        private const val HEADER_LAYOUT_ID = R.layout.item_header
+        private const val PHOTO_LAYOUT_ID = R.layout.item_photo
+        private const val FOOTER_LAYOUT_ID = R.layout.item_footer
 
         fun <T : RecyclerView.ViewHolder> instantiateViewHolder(
             parent: ViewGroup,
@@ -56,17 +61,17 @@ class PhotosAdapter(
         return when (viewType) {
             ITEM_VIEW_TYPE_ITEM -> instantiateViewHolder(
                 parent,
-                PhotoViewHolder.LAYOUT_ID,
+                PHOTO_LAYOUT_ID,
                 ::PhotoViewHolder
             )
             ITEM_VIEW_TYPE_FOOTER -> instantiateViewHolder(
                 parent,
-                FooterViewHolder.LAYOUT_ID,
+                FOOTER_LAYOUT_ID,
                 ::FooterViewHolder
             )
             else -> instantiateViewHolder(
                 parent,
-                HeaderViewHolder.LAYOUT_ID,
+                HEADER_LAYOUT_ID,
                 ::HeaderViewHolder
             )
         }
@@ -130,11 +135,7 @@ class PhotosAdapter(
      *
      * @param photoItemView View of the item.
      */
-    class PhotoViewHolder(photoItemView: View) : RecyclerView.ViewHolder(photoItemView) {
-
-        companion object {
-            const val LAYOUT_ID = R.layout.item_photo
-        }
+    inner class PhotoViewHolder(photoItemView: View) : RecyclerView.ViewHolder(photoItemView) {
 
         fun bind(photo: Photo) {
             // Sets ImageView's dimension ratio
@@ -159,6 +160,10 @@ class PhotosAdapter(
                 )
                 .error(R.drawable.shape_placeholder_error)
                 .into(itemView.image_view)
+
+            itemView.image_view.setOnClickListener {
+                onPhotoClick(photo)
+            }
         }
     }
 
@@ -167,11 +172,7 @@ class PhotosAdapter(
      *
      * @param headerView View of the header.
      */
-    class HeaderViewHolder(headerView: View) : RecyclerView.ViewHolder(headerView) {
-
-        companion object {
-            const val LAYOUT_ID = R.layout.item_header
-        }
+    inner class HeaderViewHolder(headerView: View) : RecyclerView.ViewHolder(headerView) {
 
         fun bind() {
             (itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
@@ -198,11 +199,7 @@ class PhotosAdapter(
      *
      * @param footerView View of the footer.
      */
-    class FooterViewHolder(footerView: View) : RecyclerView.ViewHolder(footerView) {
-
-        companion object {
-            const val LAYOUT_ID = R.layout.item_footer
-        }
+    inner class FooterViewHolder(footerView: View) : RecyclerView.ViewHolder(footerView) {
 
         fun bind() {
             (itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true

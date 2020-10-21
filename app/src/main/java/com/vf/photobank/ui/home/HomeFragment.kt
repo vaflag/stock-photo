@@ -1,6 +1,5 @@
 package com.vf.photobank.ui.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.vf.photobank.R
 import com.vf.photobank.domain.entity.Photo
 import com.vf.photobank.util.hide
 import com.vf.photobank.util.show
+import com.vf.photobank.util.showSnackBar
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_footer.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,16 +19,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * Home fragment of the application.
  *
- * The home fragment displays a list of image suggestions.
+ * The home fragment displays a list of photo suggestions.
  */
-class HomeFragment : Fragment() {
+class HomeFragment(
+    onPhotoClick: (Photo) -> Unit
+) : Fragment() {
     private val viewModel: HomeViewModel by viewModel()
-    private val photosAdapter = PhotosAdapter(hasHeader = true)
+    private val photosAdapter = PhotosAdapter(hasHeader = true, onPhotoClick = onPhotoClick)
     private var nextPageLoading = false
-    private val snackBar: Snackbar by lazy {
-        Snackbar.make(recycler_view_photos, R.string.home_error_snack_bar, Snackbar.LENGTH_LONG)
-            .setActionTextColor(Color.WHITE)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,7 +104,7 @@ class HomeFragment : Fragment() {
      * Loads the next page of suggested photos.
      */
     private fun loadNextPage() {
-        progress_bar_footer.show()
+        progress_bar_footer?.show()
         viewModel.getSuggestedPhotosNextPage(::onNextPageLoaded, ::onNextPageLoadingError)
     }
 
@@ -121,9 +118,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun onNextPageLoadingError() {
-        snackBar.setAction(R.string.home_error_snack_bar_button) {
+        showSnackBar(
+            constraint_layout_home,
+            R.string.home_error_snack_bar,
+            R.string.home_error_snack_bar_button
+        ) {
             loadNextPage()
-        }.show()
+        }
         progress_bar_footer.hide()
         nextPageLoading = false
     }
@@ -144,8 +145,12 @@ class HomeFragment : Fragment() {
 
     private fun onPhotoUpdateError() {
         layout_swipe_refresh.isRefreshing = false
-        snackBar.setAction(R.string.home_error_snack_bar_button) {
+        showSnackBar(
+            constraint_layout_home,
+            R.string.home_error_snack_bar,
+            R.string.home_error_snack_bar_button
+        ) {
             refreshPhotos()
-        }.show()
+        }
     }
 }

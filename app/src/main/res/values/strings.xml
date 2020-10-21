@@ -6,11 +6,18 @@
     <string name="home_header_title">Free Stock Photos</string>
     <string name="home_header_subtitle">provided by <u>Pexels</u></string>
     <string name="home_header_image_description">Pexel\'s logo</string>
-
-    <!-- ERRORS -->
     <string name="home_error">Something went wrong.</string>
     <string name="home_error_action"><u>Try again</u></string>
     <string name="home_error_snack_bar">An error has occurred.</string>
     <string name="home_error_snack_bar_button">Try again</string>
     <string name="home_error_image_description">Error icon</string>
+
+    <!-- FULL SCREEN PHOTO VIEW -->
+    <string name="photo_top_layout_text">Details</string>
+    <string name="photo_image_view_back_description">Back button</string>
+    <string name="photo_image_view_save_description">Save photo button</string>
+    <string name="photo_saved_file_name">PEXELS-%1$d.jpeg</string>
+    <string name="photo_saved_success">Photo saved in gallery.</string>
+    <string name="photo_saved_failure">The photo could not be saved.</string>
+    <string name="photo_snack_bar_hide">Hide</string>
 </resources>

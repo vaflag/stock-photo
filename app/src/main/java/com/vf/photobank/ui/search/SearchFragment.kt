@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.vf.photobank.R
+import com.vf.photobank.domain.entity.Photo
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -15,7 +16,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * The search fragment allows the user to
  * retrieve a selection of images from a query.
  */
-class SearchFragment : Fragment() {
+class SearchFragment(
+    onPhotoClick: (Photo) -> Unit
+) : Fragment() {
     private val viewModel: SearchViewModel by viewModel()
 
     override fun onCreateView(
