@@ -5,6 +5,7 @@
     <color name="colorAccent">#000</color>
     <color name="colorPexels">#05a081</color>
     <color name="white">#fff</color>
+    <color name="transparentWhite">#CCFFFFFF</color>
     <color name="black">#000</color>
     <color name="lightGray">#E1E1E1</color>
     <color name="transparentBlack1">#EA000000</color>

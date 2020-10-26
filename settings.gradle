@@ -1,2 +1,3 @@
+include ':app:libs:AnimatedTabLayout'
 include ':app'
 rootProject.name = "photobank"

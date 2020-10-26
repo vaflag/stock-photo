@@ -69,7 +69,7 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:2.1.6"
 
     // AnimatedTabLayout
-    implementation 'com.github.iammert:AnimatedTabLayout:0.1'
+    implementation project(path: ':app:libs:AnimatedTabLayout')
 
     // Custom Image View
     implementation 'com.github.MikeOrtiz:TouchImageView:3.0.1'

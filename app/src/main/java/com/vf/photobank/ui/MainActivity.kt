@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: AnimatedTabLayout
-    private val fragments = listOf(
+    private val fragments = listOf<Fragment>(
         HomeFragment(onPhotoClick = ::showFullScreenPhotoView),
         SearchFragment(onPhotoClick = ::showFullScreenPhotoView)
     )
@@ -54,8 +55,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout = tab_layout
         tabLayout.setupViewPager(viewPager)
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-        (image_view_full_screen as TouchImageView).setOnClickListener { onFullScreenPhotoClick() }
-        button_back.setOnClickListener { hideFullScreenPhotoView() }
+        setUpTabs()
     }
 
     inner class ViewPagerAdapter(fragmentManager: FragmentManager) :
@@ -64,6 +64,31 @@ class MainActivity : AppCompatActivity() {
             fragments.getOrNull(position) ?: HomeFragment(::showFullScreenPhotoView)
 
         override fun getCount() = fragments.size
+    }
+
+    /**
+     * Sets click listeners on navigation tabs.
+     */
+    private fun setUpTabs() {
+        for ((index, tab) in tabLayout.tabs.withIndex()) {
+            tab.setOnClickListener {
+                onTabClicked(index)
+            }
+        }
+        (image_view_full_screen as TouchImageView).setOnClickListener { onFullScreenPhotoClick() }
+        button_back.setOnClickListener { hideFullScreenPhotoView() }
+    }
+
+    private fun onTabClicked(position: Int) {
+        if (viewPager.currentItem == position) {
+            fragments.getOrNull(position)?.let {
+                if (it is ScrollableFragment) {
+                    it.scrollToTop()
+                }
+            }
+        } else {
+            viewPager.setCurrentItem(position, true)
+        }
     }
 
     /**

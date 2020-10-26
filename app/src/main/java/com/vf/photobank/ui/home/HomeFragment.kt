@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vf.photobank.R
 import com.vf.photobank.domain.entity.Photo
+import com.vf.photobank.ui.ScrollableFragment
 import com.vf.photobank.util.hide
 import com.vf.photobank.util.show
 import com.vf.photobank.util.showSnackBar
@@ -23,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class HomeFragment(
     onPhotoClick: (Photo) -> Unit
-) : Fragment() {
+) : Fragment(), ScrollableFragment {
     private val viewModel: HomeViewModel by viewModel()
     private val photosAdapter = PhotosAdapter(
         headerType = PhotosAdapter.HeaderType.HOME,
@@ -155,5 +156,9 @@ class HomeFragment(
         ) {
             refreshPhotos()
         }
+    }
+
+    override fun scrollToTop() {
+        recycler_view_photos.smoothScrollToPosition(0)
     }
 }

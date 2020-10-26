@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vf.photobank.R
 import com.vf.photobank.domain.entity.Photo
+import com.vf.photobank.ui.ScrollableFragment
 import com.vf.photobank.ui.home.PhotosAdapter
 import com.vf.photobank.util.hide
 import com.vf.photobank.util.hideKeyboard
@@ -32,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class SearchFragment(
     onPhotoClick: (Photo) -> Unit
-) : Fragment() {
+) : Fragment(), ScrollableFragment {
     private val viewModel: SearchViewModel by viewModel()
     private val photosAdapter = PhotosAdapter(
         headerType = PhotosAdapter.HeaderType.SEARCH,
@@ -280,5 +281,9 @@ class SearchFragment(
     override fun onPause() {
         edit_text_search.hideKeyboard()
         super.onPause()
+    }
+
+    override fun scrollToTop() {
+        recycler_view_photos.smoothScrollToPosition(0)
     }
 }
