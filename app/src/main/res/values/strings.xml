@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">photobank</string>
+    <string name="app_name">Stock Photo</string>
     <string name="item_photo_content_description">Photo</string>
 
     <!-- HOME FRAGMENT -->
