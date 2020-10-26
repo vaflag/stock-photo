@@ -11,7 +11,7 @@ It is currently in the development phase.:construction:
 </p></br>
 
 The home screen of the app shows a selection of popular photos.  
-*Forthcoming:* Photos can be browsed using a search bar.
+Photos can be browsed using a search bar.
 
 ## Run the app
 This intermediate version of the project can be cloned and launched using [Android Studio](https://developer.android.com/studio).  
