@@ -25,7 +25,10 @@ class HomeFragment(
     onPhotoClick: (Photo) -> Unit
 ) : Fragment() {
     private val viewModel: HomeViewModel by viewModel()
-    private val photosAdapter = PhotosAdapter(hasHeader = true, onPhotoClick = onPhotoClick)
+    private val photosAdapter = PhotosAdapter(
+        headerType = PhotosAdapter.HeaderType.HOME,
+        onPhotoClick = onPhotoClick
+    )
     private var nextPageLoading = false
 
     override fun onCreateView(
@@ -137,7 +140,7 @@ class HomeFragment(
     }
 
     private fun onPhotosUpdated(photos: List<Photo>) {
-        photosAdapter.updatePhotos(photos)
+        photosAdapter.setPhotos(photos)
         layout_error.hide()
         progress_bar.hide()
         layout_swipe_refresh.isRefreshing = false

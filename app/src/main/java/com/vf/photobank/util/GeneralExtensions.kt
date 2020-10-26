@@ -1,6 +1,8 @@
 package com.vf.photobank.util
 
+import android.app.Activity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 fun View.show(animated: Boolean = false) {
     if (animated) {
@@ -31,4 +33,14 @@ fun View.hide(animated: Boolean = false) {
     } else {
         visibility = View.GONE
     }
+}
+
+fun View.showKeyboard() {
+    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+}
+
+fun View.hideKeyboard() {
+    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }

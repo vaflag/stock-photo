@@ -2,8 +2,11 @@ package com.vf.photobank.ui
 
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.MotionEvent
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
@@ -28,6 +31,7 @@ import com.vf.photobank.util.saveImageInGallery
 import com.vf.photobank.util.show
 import com.vf.photobank.util.showSnackBar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_full_screen_photo_view.*
 
 class MainActivity : AppCompatActivity() {
@@ -185,5 +189,18 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (full_screen_photo_view.isVisible) hideFullScreenPhotoView()
         else super.onBackPressed()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        ev?.let {
+            if (currentFocus is EditText) {
+                // Clears focus when outside of the search bar is touched
+                val rect = Rect()
+                layout_search_bar.getGlobalVisibleRect(rect)
+                if (!rect.contains(it.rawX.toInt(), it.rawY.toInt()))
+                    (currentFocus as EditText).clearFocus()
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }

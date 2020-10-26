@@ -7,10 +7,21 @@
     <string name="home_header_subtitle">provided by <u>Pexels</u></string>
     <string name="home_header_image_description">Pexel\'s logo</string>
     <string name="home_error">Something went wrong.</string>
-    <string name="home_error_action"><u>Try again</u></string>
+    <string name="home_error_action">Touch here to <u>try again</u>.</string>
     <string name="home_error_snack_bar">An error has occurred.</string>
     <string name="home_error_snack_bar_button">Try again</string>
     <string name="home_error_image_description">Error icon</string>
+
+    <!-- SEARCH FRAGMENT -->
+    <string name="search_text_title">Looking for something?</string>
+    <string name="search_bar_hint">Search for photos</string>
+    <string name="search_number_of_results">%1$d results found</string>
+    <string name="search_singular_number_of_results">%1$d result found</string>
+    <string name="search_max_number_of_results">%1$d+ results found</string>
+    <string name="search_text_subtitle">Use the search bar to browse through thousands of photos.</string>
+    <string name="search_no_results_title">No results found…</string>
+    <string name="search_no_results_subtitle">No results were found for this query.\nTry something else.</string>
+    <string name="search_button_text">Go</string>
 
     <!-- FULL SCREEN PHOTO VIEW -->
     <string name="photo_top_layout_text">Details</string>

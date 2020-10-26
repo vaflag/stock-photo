@@ -15,9 +15,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.vf.photobank.R
 import com.vf.photobank.domain.entity.Photo
+import com.vf.photobank.util.MAX_NUMBER_OF_RESULTS
 import com.vf.photobank.util.PEXELS_WEBSITE_URL
 import com.vf.photobank.util.PHOTOS_CORNER_RADIUS
-import kotlinx.android.synthetic.main.item_header.view.*
+import kotlinx.android.synthetic.main.item_header_home.view.*
+import kotlinx.android.synthetic.main.item_header_search.view.*
 import kotlinx.android.synthetic.main.item_photo.view.*
 
 /**
@@ -26,21 +28,23 @@ import kotlinx.android.synthetic.main.item_photo.view.*
  * Binds a set of Photo objects to views.
  * Adds a header view and a footer view.
  *
- * @param hasHeader indicates whether a header should be added.
+ * @param headerType type of the list's header.
+ * @param onPhotoClick action performed when a photo is clicked.
  */
 class PhotosAdapter(
-    private val hasHeader: Boolean = false,
+    private val headerType: HeaderType,
     private val onPhotoClick: (Photo) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
+        const val HEADER_HOME_LAYOUT_ID = R.layout.item_header_home
+        const val HEADER_SEARCH_LAYOUT_ID = R.layout.item_header_search
+        const val PHOTO_LAYOUT_ID = R.layout.item_photo
+        const val FOOTER_LAYOUT_ID = R.layout.item_footer
+
         private const val ITEM_VIEW_TYPE_HEADER = 0
         private const val ITEM_VIEW_TYPE_ITEM = 1
         private const val ITEM_VIEW_TYPE_FOOTER = 2
-
-        private const val HEADER_LAYOUT_ID = R.layout.item_header
-        private const val PHOTO_LAYOUT_ID = R.layout.item_photo
-        private const val FOOTER_LAYOUT_ID = R.layout.item_footer
 
         fun <T : RecyclerView.ViewHolder> instantiateViewHolder(
             parent: ViewGroup,
@@ -53,9 +57,14 @@ class PhotosAdapter(
         }
     }
 
+    enum class HeaderType(val layoutId: Int) {
+        HOME(HEADER_HOME_LAYOUT_ID),
+        SEARCH(HEADER_SEARCH_LAYOUT_ID)
+    }
+
     private var photos: MutableList<Photo> = mutableListOf()
-    private val addedViews =
-        if (hasHeader) 2 else 1 // Number of views added (header and footer) in addition to photos
+    private val addedViews = 2 // Number of views added (header and footer) in addition to photos
+    var numberOfResults = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -71,7 +80,7 @@ class PhotosAdapter(
             )
             else -> instantiateViewHolder(
                 parent,
-                HEADER_LAYOUT_ID,
+                headerType.layoutId,
                 ::HeaderViewHolder
             )
         }
@@ -96,39 +105,40 @@ class PhotosAdapter(
         return when {
             position == itemCount - 1 -> ITEM_VIEW_TYPE_FOOTER
             position > 0 -> ITEM_VIEW_TYPE_ITEM
-            else -> if (hasHeader) ITEM_VIEW_TYPE_HEADER else ITEM_VIEW_TYPE_ITEM
+            else -> ITEM_VIEW_TYPE_HEADER
         }
     }
 
     /**
-     * Adds every photo from [photos] and updates the UI.
+     * Clears current photos, adds every photo
+     * from [newPhotos] and update the UI.
      *
-     * @param photos the photos to be added.
+     * @param newPhotos the new photos to be added.
      */
-    fun addPhotos(photos: List<Photo>) {
-        val insertionStartingPosition = this.photos.size + 1
-        this.photos.addAll(photos)
-        notifyItemRangeInserted(insertionStartingPosition, photos.size)
+    fun setPhotos(
+        newPhotos: List<Photo>
+    ) {
+        photos.clear()
+        photos.addAll(newPhotos)
+        notifyDataSetChanged()
     }
 
     /**
-     * Clears current photos, adds new ones and update the UI.
+     * Adds every photo from [newPhotos] and updates the UI.
      *
-     * @param updatedPhotos the new photos to be added.
+     * @param newPhotos the photos to be added.
      */
-    fun updatePhotos(updatedPhotos: List<Photo>) {
-        photos.clear()
-        photos.addAll(updatedPhotos)
-        notifyDataSetChanged()
+    fun addPhotos(newPhotos: List<Photo>) {
+        val insertionStartingPosition = this.photos.size + 1
+        photos.addAll(newPhotos)
+        notifyItemRangeInserted(insertionStartingPosition, newPhotos.size)
     }
 
     fun hasItems(): Boolean {
         return photos.size > 0
     }
 
-    private fun getIndexFromPosition(position: Int): Int {
-        return if (hasHeader) position - 1 else position
-    }
+    private fun getIndexFromPosition(position: Int) = position - 1
 
     /**
      * ViewHolder for Photo item.
@@ -176,6 +186,13 @@ class PhotosAdapter(
 
         fun bind() {
             (itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan = true
+            when (headerType) {
+                HeaderType.HOME -> bindHomeHeader()
+                HeaderType.SEARCH -> bindSearchHeader()
+            }
+        }
+
+        private fun bindHomeHeader() {
             itemView.image_view_header.apply {
                 clipToOutline = true
                 setOnClickListener {
@@ -190,6 +207,19 @@ class PhotosAdapter(
                         null
                     )
                 }
+            }
+        }
+
+        private fun bindSearchHeader() {
+            (itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams).topMargin = 0
+            val context = itemView.context
+            itemView.text_view_results.text = when (numberOfResults) {
+                MAX_NUMBER_OF_RESULTS -> context.getString(
+                    R.string.search_max_number_of_results,
+                    numberOfResults
+                )
+                1 -> context.getString(R.string.search_singular_number_of_results, numberOfResults)
+                else -> context.getString(R.string.search_number_of_results, numberOfResults)
             }
         }
     }
