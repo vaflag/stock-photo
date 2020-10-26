@@ -195,10 +195,17 @@ class MainActivity : AppCompatActivity() {
         ev?.let {
             if (currentFocus is EditText) {
                 // Clears focus when outside of the search bar is touched
-                val rect = Rect()
-                layout_search_bar.getGlobalVisibleRect(rect)
-                if (!rect.contains(it.rawX.toInt(), it.rawY.toInt()))
-                    (currentFocus as EditText).clearFocus()
+                val searchBarRect = Rect()
+                layout_search_bar?.getGlobalVisibleRect(searchBarRect)
+                // Checks if touch is outside of search bar
+                if (!searchBarRect.contains(it.rawX.toInt(), it.rawY.toInt())) {
+                    val searchButtonRect = Rect()
+                    search_button?.getGlobalVisibleRect(searchButtonRect)
+                    // Checks if touch is outside of search button
+                    if (!searchButtonRect.contains(it.rawX.toInt(), it.rawY.toInt())) {
+                        (currentFocus as EditText).clearFocus()
+                    }
+                }
             }
         }
         return super.dispatchTouchEvent(ev)

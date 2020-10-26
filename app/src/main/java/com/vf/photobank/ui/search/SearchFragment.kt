@@ -39,6 +39,7 @@ class SearchFragment(
         onPhotoClick = onPhotoClick
     )
     private var nextPageLoading = false
+    private lateinit var searchButton: SearchButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,17 +95,20 @@ class SearchFragment(
     }
 
     private fun setSearchBar() {
+        searchButton = search_button
+        searchButton.setOnClickListener { validateSearchInput() }
         layout_search_bar.setOnClickListener { edit_text_search.requestFocus() }
         image_view_clear.setOnClickListener { clearSearchText() }
-        search_button.setOnClickListener { validateSearchInput() }
 
         edit_text_search.apply {
             addTextChangedListener { onSearchTextChanged() }
             setOnEditorActionListener { _, actionId, _ ->
                 return@setOnEditorActionListener when (actionId) {
                     IME_ACTION_DONE -> {
-                        onSearchInputValidated()
-                        true
+                        if (!searchButton.isLoading) {
+                            onSearchInputValidated()
+                            false
+                        } else false
                     }
                     else -> false
                 }
@@ -133,10 +137,10 @@ class SearchFragment(
     private fun onSearchTextChanged() {
         if (edit_text_search.text.toString().isNotBlank()) {
             image_view_clear.show()
-            search_button.isVisible = true
+            searchButton.isVisible = true
         } else {
             image_view_clear.hide()
-            search_button.isVisible = false
+            searchButton.isVisible = false
         }
     }
 
@@ -147,7 +151,7 @@ class SearchFragment(
         edit_text_search.setSelection(edit_text_search.text.length)
         edit_text_search.showKeyboard()
         if (edit_text_search.text.isNotBlank()) {
-            search_button.isVisible = true
+            searchButton.isVisible = true
         }
     }
 
@@ -156,28 +160,26 @@ class SearchFragment(
      */
     private fun onSearchBarUnfocused() {
         edit_text_search.hideKeyboard()
-        search_button.isVisible = false
+        searchButton.isVisible = false
     }
 
     /**
      * Triggers the validation of search bar current entry.
      */
     private fun validateSearchInput() {
-        edit_text_search.onEditorAction(IME_ACTION_DONE)
+        onSearchInputValidated()
     }
 
     /**
      * Fired when the search bar entry is validated.
      */
     private fun onSearchInputValidated() {
-        search_button.isVisible = false
         if (edit_text_search.text.isNotBlank()) {
-            if (!search_button.isLoading) {
-                loadPhotosFromQuery(edit_text_search.text.toString())
-            }
+            loadPhotosFromQuery(edit_text_search.text.toString())
         } else edit_text_search.text.clear()
         edit_text_search.clearFocus()
         edit_text_search.hideKeyboard()
+        searchButton.isVisible = false
     }
 
     /**
@@ -186,18 +188,18 @@ class SearchFragment(
      * @param query the searched term.
      */
     private fun loadPhotosFromQuery(query: String) {
-        search_button.isLoading = true
+        searchButton.isLoading = true
         viewModel.getSearchedPhotosFirstPage(query, ::onPhotosLoaded, ::onPhotoLoadingError)
     }
 
     private fun onPhotosLoaded(numberOfResults: Int, photos: List<Photo>) {
         if (layout_search_content.isVisible) layout_search_content.hide()
         displayResults(numberOfResults, photos)
-        search_button.isLoading = false
+        searchButton.isLoading = false
     }
 
     private fun onPhotoLoadingError() {
-        search_button.isLoading = false
+        searchButton.isLoading = false
         showSnackBar(
             constraint_layout_search,
             R.string.home_error_snack_bar,

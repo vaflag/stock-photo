@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import com.vf.photobank.R
 import com.vf.photobank.util.hide
 import com.vf.photobank.util.show
@@ -44,7 +45,7 @@ class SearchButton @JvmOverloads constructor(
     private fun displayContent() {
         when {
             isLoading -> displayLoadingSpinner()
-            this.isVisible -> displayText()
+            isVisible -> displayText()
             else -> this.hide(animated = true)
         }
     }
@@ -53,15 +54,15 @@ class SearchButton @JvmOverloads constructor(
         if (visibility != View.VISIBLE) {
             show(animated = true)
         }
-        text_view_go.hide()
-        progress_bar.show()
+        if (text_view_go.isVisible) text_view_go.hide()
+        if (!progress_bar.isVisible) progress_bar.show()
     }
 
     private fun displayText() {
         if (visibility != View.VISIBLE) {
             show(animated = true)
         }
-        progress_bar.hide()
-        text_view_go.show()
+        if (progress_bar.isVisible) progress_bar.hide()
+        if (!text_view_go.isVisible) text_view_go.show()
     }
 }
