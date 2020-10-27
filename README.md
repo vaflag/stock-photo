@@ -1,21 +1,27 @@
-# Stock Photos App 
-**[Under development]**  
-An Android application that allows its user to browse and download stunning photos.  
+# Stock Photo App 
+An Android application to browse and download stunning photos.  
 Data used are retrieved from [Pexels](https://www.pexels.com/api/)' free stock photos.  
-This project is a training in Android programming and is dedicated to personal use.  
-It is currently in the development phase.:construction:
+This project is a training in Android programming.  
 
 ## Overview
 </br><p align="center">
-  <img src="img/app-screenshot.png" alt="Screenshot of the application" height=480/>
+  <img src="img/app-screenshot.png" alt="Screenshot of the application" height=480 hspace="80"/>
+  <img src="img/app-preview.gif" alt="Preview of the application" height=480/>
 </p></br>
 
-The home screen of the app shows a selection of popular photos.  
-Photos can be browsed using a search bar.
+The main screen of the application shows a selection of curated photos.  
+A second screen allows to search for photos using keywords.:mag_right:  
+Touching a photo displays it in full screen in a zoomable view.  
+Photos can be saved in user's device's gallery in one click.  
 
 ## Run the app
-This intermediate version of the project can be cloned and launched using [Android Studio](https://developer.android.com/studio).  
-An ***API key*** must be retrieved from [Pexels' website](https://www.pexels.com/api/?locale=en-US) in order to run the app.  
+### Using APK
+Last release provides a signed APK that can be installed on Android devices.  
+Just install and run the app on a device.
+
+### Using code
+The code can be cloned then launched using [Android Studio](https://developer.android.com/studio).  
+An ***API key*** must be retrieved from [Pexels' website](https://www.pexels.com/api/?locale=en-US) and added to the code in order to run the app this way.  
 Just create an account to get one instantly. This step is necessary to allow the application to access the photo database.:key:  
 The key has to be copied into the file `api-key.gradle` at the root of the project, just like this :  
 `ext.api_key = "your_key_in_quotes"`
