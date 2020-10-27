@@ -1,12 +1,12 @@
 # Stock Photo App 
-An Android application to browse and download stunning photos.  
+An Android application to browse and download stunning photos.:earth_asia:  
 Data used are retrieved from [Pexels](https://www.pexels.com/api/)' free stock photos.  
 This project is a training in Android programming.  
 
 ## Overview
 </br><p align="center">
-  <img src="img/app-screenshot.png" alt="Screenshot of the application" height=480 hspace="80"/>
-  <img src="img/app-preview.gif" alt="Preview of the application" height=480/>
+  <img src="img/app-screenshot.png" alt="Screenshot of the application" height=480 hspace="40"/>
+  <img src="img/app-preview.gif" alt="Preview of the application" height=480 hspace = "40"/>
 </p></br>
 
 The main screen of the application shows a selection of curated photos.  
@@ -16,7 +16,7 @@ Photos can be saved in user's device's gallery in one click.
 
 ## Run the app
 ### Using APK
-Last release provides a signed APK that can be installed on Android devices.  
+[Latest release](https://github.com/vaflag/stock-photo/releases/tag/v1.0) provides a signed APK that can be installed on an Android device.  
 Just install and run the app on a device.
 
 ### Using code
