@@ -6,7 +6,7 @@ This project is a training in Android programming.
 ## Overview
 </br><p align="center">
   <img src="img/app-screenshot.png" alt="Screenshot of the application" height=480 hspace="40"/>
-  <img src="img/app-preview.gif" alt="Preview of the application" height=480 hspace = "40"/>
+  <img src="img/app-preview.gif" alt="Preview of the application" height=480 width=228 hspace="40"/>
 </p></br>
 
 The main screen of the application shows a selection of curated photos.  
